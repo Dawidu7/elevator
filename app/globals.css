@@ -1,0 +1,26 @@
+main {
+  display: flex;
+}
+
+tr {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-block: 1rem;
+}
+
+.elevator {
+  width: 2rem;
+  height: 2rem;
+}
+
+.elevator.current {
+  background-color: black;
+  display: grid;
+  place-items: center;
+}
+
+.elevator.current::before {
+  content: attr(data-count);
+  color: white;
+}
