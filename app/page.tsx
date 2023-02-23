@@ -10,21 +10,21 @@ export default function Home() {
     e.preventDefault()
     const registeredFloor = Number((
       (e.target as HTMLFormElement)
-        .querySelector("input[type=\"submit\"]:focus") as HTMLInputElement
+      .querySelector("input[type='submit']:focus") as HTMLInputElement
     ).value)
 
     registerFloor(registeredFloor)
   }
 
   return (
-    <main>
+    <>
       <table>
         <tbody>
           {floors.map((floor, i) => (
             <tr key={i}>
-              <td><button onClick={() => requestElevator(i)}>Request to floor {i}</button></td>
+              <td><button onClick={() => requestElevator(i)}>Call to floor {i}</button></td>
               <td>{floor.waiting}</td>
-              <td className={`elevator ${currentFloorIndex === i ? "current" : ""}`} data-count={count} />
+              <td className ={`elevator ${currentFloorIndex === i ? "current" : ""}`} data-count={count} />
             </tr>
           ))}
         </tbody>
@@ -34,6 +34,6 @@ export default function Home() {
           <input key={i} type="submit" value={i} disabled={currentFloorIndex === i} />
         ))}
       </form>
-    </main>
+    </>
   )
 }
