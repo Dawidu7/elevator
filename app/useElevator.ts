@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react"
 
 
+interface Person {
+  start: number,
+  destination: number,
+  arrived: boolean
+}
+
 export default function useElevator(floorCount: number) {
   const [ currentFloorIndex, setCurrentFloorIndex ] = useState(0)
   const [ floors, setFloors ] = useState(Array.from({ length: floorCount }, _ => ({ leaving: 0, waiting: 0 })))
