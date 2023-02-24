@@ -1,22 +1,15 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 
 
-interface Person {
-  id: number,
-  start: number,
-  destination: number | null,
-  arrived: boolean
-}
-
-// TODO: animation using ref and CSS animations
 export default function useElevator(floorCount: number) {
   const [ currentFloorIndex, setCurrentFloorIndex ] = useState(0)
-  const [ passengers, setPassengers ] = useState<Person[]>([])
+  const [ passengers, setPassengers ] = useState<Passenger[]>([])
   const [ isMoving, setIsMoving ] = useState(false)
-  const floors = Array.from({ length: floorCount }, (_, floor) => ({
+  const floors: Floor[] = Array.from({ length: floorCount }, (_, floor) => ({
     waiting: passengers.filter(({ start, destination }) => start === floor && destination === null),
     leaving: passengers.filter(({ destination, arrived }) => destination === floor && arrived === false)
   }))
+  const elevatorContainer = useRef<HTMLTableSectionElement>(null)
 
   function requestElevator(floor: number) {
     setPassengers(prevPassengers => [
@@ -57,10 +50,14 @@ export default function useElevator(floorCount: number) {
     if(direction === null || floors[currentFloorIndex].waiting.length > 0) return
     // Movement of the elevator
     setIsMoving(true)
-
+    const elevator = elevatorContainer.current?.querySelector('td.elevator.current')
+    elevator?.classList.add(direction)
+    console.log(elevator)
+    
     await delay(500)
     setCurrentFloorIndex(prevFloorIndex => direction === "up" ? prevFloorIndex + 1 : prevFloorIndex - 1)
-
+    
+    elevator?.classList.remove(direction)
     setIsMoving(false)
   }
 
@@ -88,7 +85,7 @@ export default function useElevator(floorCount: number) {
 
   return {
     currentFloorIndex,
-    passengers,
+    elevatorContainer,
     floors,
     registerFloor,
     requestElevator,
