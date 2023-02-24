@@ -4,7 +4,7 @@ import useElevator from "./useElevator"
 
 
 export default function Home() {
-  const { count, currentFloorIndex, floors, registerFloor, requestElevator } = useElevator(10)
+  const { currentFloorIndex, passengers, floors, registerFloor, requestElevator } = useElevator(10)
 
   function submitRegister(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -16,15 +16,32 @@ export default function Home() {
     registerFloor(registeredFloor)
   }
 
+  console.log(floors)
+  console.log(passengers)
+
   return (
-    <>
+    <main>
       <table>
         <tbody>
-          {floors.map((floor, i) => (
+          {floors.map(({ waiting }, i) => (
             <tr key={i}>
-              <td><button onClick={() => requestElevator(i)}>Call to floor {i}</button></td>
-              <td>{floor.waiting}</td>
-              <td className ={`elevator ${currentFloorIndex === i ? "current" : ""}`} data-count={count} />
+              <td><button onClick={() => requestElevator(i)}>Request to floor {i}</button></td>
+              <td className="waiting">
+                {waiting.length}
+                <ul>
+                  {waiting.map(waiting => (
+                    <li key={waiting.id}>p{waiting.id}</li>
+                  ))}
+                </ul>
+              </td>
+              <td
+                className={`elevator${currentFloorIndex === i ? " current" : ""}`}
+                data-count={floors.reduce((acc, { leaving }) => acc + leaving.length, 0)}
+              >
+                <ul>
+                  {/* Display those who are currently in elevator */}
+                </ul>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -34,6 +51,6 @@ export default function Home() {
           <input key={i} type="submit" value={i} disabled={currentFloorIndex === i} />
         ))}
       </form>
-    </>
+    </main>
   )
 }

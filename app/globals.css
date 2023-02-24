@@ -1,22 +1,104 @@
+/* Defaults */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom */
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+tbody {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 1rem;
+}
+
 tr {
   display: flex;
   gap: 1rem;
   align-items: center;
-  margin-block: 1rem;
+}
+
+.waiting {
+  position: relative;
+  cursor: default;
 }
 
 .elevator {
   width: 2rem;
   height: 2rem;
+  display: grid;
+  place-items: center;
+  border-radius: .4rem;
 }
 
 .elevator.current {
   background-color: black;
-  display: grid;
-  place-items: center;
 }
 
-.elevator.current::before {
+.elevator.elevator.current::before {
   content: attr(data-count);
+  color: #eee;
+}
+
+.waiting > ul,
+.elevator > ul {
+  position: absolute;
+  left: 75%;
+  top: 75%;
+  display: none;
+  background-color: #444;
+  color: #eee;
+  padding: .5rem;
+  border-radius: .5rem;
+}
+
+.waiting:hover > ul:has(li),
+.elevator.current > ul:has(li) {
+  display: block;
+}
+
+form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: .7rem;
+  height: fit-content;
+  margin-left: 3rem;
+  background-color: #333;
+  padding: .5rem;
+  border: solid 2px #999;
+  border-radius: 1rem;
+}
+
+form > input {
+  all: unset;
+  border: solid 1px gold;
+  border-radius: 50%;
   color: white;
+  padding: .5rem;
+}
+
+form > input[disabled] {
+  background-color: #222;
+  color: #888;
+}
+
+form > input:not([disabled]):hover {
+  cursor: pointer;
+  background-color: #555;
 }
