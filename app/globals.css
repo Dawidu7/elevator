@@ -34,6 +34,19 @@ tr {
   align-items: center;
 }
 
+td > button {
+  all: unset;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 150ms ease-in-out, color 150ms ease-in-out;
+}
+
+td > button:hover {
+  transform: scale(1.1);
+  color: #444;
+}
+
 .waiting {
   position: relative;
   cursor: default;
@@ -67,12 +80,12 @@ tr {
   position: absolute;
   left: 75%;
   top: 75%;
-  display: none;
   background-color: #444;
   color: #eee;
   padding: .5rem;
   border-radius: .5rem;
   z-index: 1;
+  display: none;
 }
 
 .waiting:hover > ul:has(li),

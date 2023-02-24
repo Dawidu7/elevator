@@ -1,3 +1,6 @@
+import { MdElevator } from "react-icons/md"
+
+
 interface ElevatorProps {
   currentFloorIndex: number,
   elevatorContainer: React.RefObject<HTMLTableSectionElement>,
@@ -13,7 +16,7 @@ export default function Elevator({ currentFloorIndex, elevatorContainer, floors,
       <tbody ref={elevatorContainer}>
         {floors.map((floor, i) => (
           <tr key={i}>
-            <td><button onClick={() => requestElevator(i)}>Request to floor {i}</button></td>
+            <td><button onClick={() => requestElevator(i)}><MdElevator size={24} /> {i}</button></td>
             <td className="waiting">
               {floor.waiting.length}
               <ul>

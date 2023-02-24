@@ -34,25 +34,24 @@ export default function useElevator(floorCount: number) {
   }
 
   async function moveElevator() {
-    const direction = getDirection()
     // Dispatch people that want to leave on current floor
     if(floors[currentFloorIndex].leaving.length > 0) {
       setPassengers(prevPassengers => {
         const updatedPassengers = [ ...prevPassengers ]
         updatedPassengers
-          .filter(({ destination, arrived }) => destination === currentFloorIndex && arrived === false)
-          .forEach(passenger => passenger.arrived = true)
+        .filter(({ destination, arrived }) => destination === currentFloorIndex && arrived === false)
+        .forEach(passenger => passenger.arrived = true)
         
         return updatedPassengers
       })
     }
+    const direction = getDirection()
     // If there is no direction or there are people waiting on current floor - don't move
     if(direction === null || floors[currentFloorIndex].waiting.length > 0) return
     // Movement of the elevator
     setIsMoving(true)
     const elevator = elevatorContainer.current?.querySelector('td.elevator.current')
     elevator?.classList.add(direction)
-    console.log(elevator)
     
     await delay(500)
     setCurrentFloorIndex(prevFloorIndex => direction === "up" ? prevFloorIndex + 1 : prevFloorIndex - 1)
